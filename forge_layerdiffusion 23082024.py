@@ -370,6 +370,11 @@ class LayerDiffusionForForge(scripts.Script):
             lC, lH, lW = latent.shape
             if lH != pixel.height // 8 or lW != pixel.width // 8:
                 print('[LayerDiffuse] VAE zero latent mode.')
+ 
+                 if lC < 4:
+                     print('[LayerDiffuse] VAE expecting 4 channels.')
+                     lC = 4
+
                 latent = torch.zeros((lC, pixel.height // 8, pixel.width // 8)).to(latent)
 
             png, vis = vae_transparent_decoder.decode(latent, pixel)
